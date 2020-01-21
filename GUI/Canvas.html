@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GUI</title>
+    <script type="text/javascript" src="smoothie.js"></script>
+</head>
+<body>
+<form id = "frm1" name = "form1">
+          X Threshold: <input type = "number" name = "x"><br>
+          Y Threshold: <input type = "number" name = "y"><br>
+          Z Threshold: <input type = "number" name = "z"><br>
+</form>
+
+<div class="row">
+  <div class="column"><canvas id="X canvas" width="400" height="200"></canvas></div>
+  <div class="column"><canvas id="Y canvas" width="400" height="200"></canvas></div>
+  <div class="column"><canvas id="Z canvas" width="400" height="200"></canvas></div>
+</div>
+
+
+
+
+<script>
+    let smoothieX = new SmoothieChart();
+    let smoothieY = new SmoothieChart();
+    let smoothieZ = new SmoothieChart();
+
+    //Pseudo-RealTime GPS Data
+    //[ZGRAPH]
+    var xData1 = [1,2,3,4,5,6,7,8,9,10]
+    var xData2 = [2,3,4,5,6,7,8,9,10,11]
+
+    var yData1 = [1,2,3,4,5,6,7,8,9,10]
+    var yData2 = [2,3,4,5,6,7,8,9,10,11]
+
+    var zData1 = [1,2,3,4,5,6,7,8,9,10]
+    var zData2 = [2,3,4,5,6,7,8,9,10,11]
+
+    // Data
+    let lineX1 = new TimeSeries();
+    let lineX2 = new TimeSeries();
+
+    let lineY1 = new TimeSeries();
+    let lineY2 = new TimeSeries();
+
+    let lineZ1 = new TimeSeries();
+    let lineZ2 = new TimeSeries();
+
+    let all_values = document.getElementById("frm1")
+    
+    var count = 0; 
+    //Every second, this code will execute the defined function below.
+    setInterval(function() {
+    //Adding new [X,Y,Z]-data from drone to array
+    
+    // lineX1.append(new Date().getTime(), xData1[count]);
+    // lineX2.append(new Date().getTime(), xData2[count]);
+
+    // lineY1.append(new Date().getTime(), yData1[count]);
+    // lineY2.append(new Date().getTime(), yData2[count]);
+
+    // lineZ1.append(new Date().getTime(), zData1[count]);
+    // lineZ2.append(new Date().getTime(), zData2[count]);
+
+
+    //Real-Time Data
+    lineX1.append(new Date().getTime(), Math.random()*100);
+    lineX2.append(new Date().getTime(), Math.random()*100);
+
+    lineY1.append(new Date().getTime(), Math.random()*100);
+    lineY2.append(new Date().getTime(), Math.random()*100);
+
+    lineZ1.append(new Date().getTime(), Math.random()*100);
+    lineZ2.append(new Date().getTime(), Math.random()*100);
+
+
+
+    count++; //Get next number every second
+    }, 1000);
+
+
+    // Add to SmoothieChart
+    smoothieX.addTimeSeries(lineX1,
+    { strokeStyle:'rgb(255, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.1)', lineWidth:1 });
+    
+    smoothieX.addTimeSeries(lineX2,
+    { strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.1)', lineWidth:1 });
+
+     smoothieY.addTimeSeries(lineY1,
+    { strokeStyle:'rgb(255, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.1)', lineWidth:1 });
+    
+    smoothieY.addTimeSeries(lineY2,
+    { strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.1)', lineWidth:1 });
+
+     smoothieZ.addTimeSeries(lineZ1,
+    { strokeStyle:'rgb(255, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.1)', lineWidth:1 });
+    
+    smoothieZ.addTimeSeries(lineZ2,
+    { strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.1)', lineWidth:1 });
+
+
+    smoothieX.streamTo(document.getElementById("X canvas"), 1000);
+    smoothieY.streamTo(document.getElementById("Y canvas"), 1000);
+    smoothieZ.streamTo(document.getElementById("Z canvas"), 1000);
+
+
+</script>
+</body>
+</html>
